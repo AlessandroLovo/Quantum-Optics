@@ -1,0 +1,324 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[english]{babel}
+\input{"/media/alessandro/OS/Users/ale57/Documents/1. universita'/ANNO IV (2019-2020)/second semester/header.tex"}
+
+\begin{document}
+
+\title{Quantum Optics Lab report}
+\author{Alessandro Lovo}
+\date{Scuola Galileiana di Studi Superiori, \today}
+
+\maketitle
+
+
+\begin{abstract}
+  In this report, after a brief theoretical introduction, two experiments of photonics will be discussed: the difference between thermal and coherent states and the indivisibility of photons.
+\end{abstract}
+
+
+
+\section{Coherent and thermal states}
+  \subsection{Theoretical introduction}
+    \paragraph{Second quantization of the electromagnetic field}
+      The electric and magnetic field can be written in terms of scalar and vector potential $(\phi, \vec{A})(\vec{r},t)$ as
+
+      \begin{equation} \label{eq:potentials}
+        \begin{cases}
+          \vec{E} = - \vec{\nabla}\phi - \frac{\partial \vec{A}}{\partial t} \\
+          \vec{B} = \vec{\nabla} \times \vec{A}
+        \end{cases}
+      \end{equation}
+
+      However, from the Maxwell equations in vacuum one finds $\nabla^2 \phi + \frac{\partial}{\partial t}(\vec{\nabla} \cdot \vec{A}) = 0$, and in the Coulomb gauge ($\vec{\nabla} \cdot \vec{A} = 0$) with vanishing boundary condition for the scalar potential ($\phi(\infty) \to 0$) this yields the unique solution $\phi = 0$, simplifying eq \ref{eq:potentials}. \\
+      If now one writes the energy of the e.m. field one finds
+
+
+      \begin{align*}
+        H & = \int_V d^3\vec{r}\left(\frac{\epsilon_0}{2} E^2 + \frac{1}{2\mu_0} B^2 \right) \\
+        &   = \int_V d^3\vec{r}\left(\frac{\epsilon_0}{2} \left(\frac{\partial \vec{A}}{\partial t} \right)^2 + \frac{1}{2\mu_0} \left(\vec{\nabla} \times \vec{A} \right)^2 \right) \\
+        &   = \sum_{\vec{k}} \sum_{s = 1}^2 \epsilon_0 \omega_k^2 \left(A_{\vec{k}s}^*A_{\vec{k}s} + A_{\vec{k}s}A_{\vec{k}s}^* \right)
+      \end{align*}
+
+
+      where $\omega_k = ck$ and the last step is obtained with the Fourier expansion of the vector potential
+
+      \begin{equation*}
+        \vec{A}(\vec{r},t) = \frac{1}{\sqrt{V}} \sum_{\vec{k}} \sum_{s = 1}^2 \left(A_{\vec{k}s} e^{i(\vec{k}\cdot\vec{r} - \omega_kt)} + A_{\vec{k}s}^* e^{-i(\vec{k}\cdot\vec{r} - \omega_kt)} \right)
+      \end{equation*}
+
+      One can then introduce the quantities
+
+      \begin{equation*} \label{eq:to_be_promoted}
+        \begin{cases}
+          a_{\vec{k}s} = A_{\vec{k}s} \sqrt{\frac{2\epsilon_0\omega_k}{\hbar}}, \qquad  \\
+          q_{\vec{k}s} = \sqrt{\frac{2\hbar}{\omega_k}} \frac{a_{\vec{k}s} + a_{\vec{k}s}^*}{2} \\
+          p_{\vec{k}s} = \sqrt{2\hbar\omega_k}  \frac{a_{\vec{k}s} - a_{\vec{k}s}^*}{2i}
+        \end{cases}
+      \end{equation*}
+
+      and the energy becomes
+
+      \begin{equation*}
+          H = \sum_{\vec{k}} \sum_{s = 1}^2 \frac{\hbar\omega_k}{2} \left(a_{\vec{k}s}^*a_{\vec{k}s} + a_{\vec{k}s}a_{\vec{k}s}^* \right)
+           = \sum_{\vec{k}} \sum_{s = 1}^2 \left(\frac{1}{2}p_{\vec{k}s}^2 + \frac{1}{2} \omega_k^2 q_{\vec{k}s}^2 \right)
+      \end{equation*}
+
+      which resembles an harmonic oscillator that can be easily quantized by promoting $a, a^*, p, q$ to operators with the following commutation relations
+
+      \begin{equation*}
+        \begin{cases}
+          [\hat{q}_{\vec{k}s}, \hat{p}_{\vec{k'}s'}] = i\hbar \delta_{\vec{k},\vec{k'}} \delta_{s,s'} \\
+          [\hat{a}_{\vec{k}s}, \hat{a}_{\vec{k}s}^{\dagger}] = \delta_{\vec{k},\vec{k'}} \delta_{s,s'}
+        \end{cases}
+      \end{equation*}
+
+      where $\hat{a}_{\vec{k}s}$ and $\hat{a}_{\vec{k}s}^\dagger$ are respectively the annihilation and the creation operators acting on the Fock states in number representation $\ket{\dots n_{\vec{k}s} \dots n_{\vec{k'}s'} \dots}$ which means there are $n_{\vec{k}s}$ photons in state $\ket{\vec{k}s}$ and so on.\\
+      The expression for the electric field operator is then the following, where $\vec{\epsilon}_{\vec{k}s}$ is the versor of the field
+
+      \begin{equation} \label{eq:E}
+        \hat{\vec{E}}_{\vec{k}s} = i \sqrt{\frac{\hbar\omega_k}{2\epsilon_0V}} \left(\hat{a}_{\vec{k}s}e^{i(\vec{k}\cdot\vec{r} - \omega_kt)} - \hat{a}_{\vec{k}s}^\dagger e^{-i(\vec{k}\cdot\vec{r} - \omega_kt)} \right) \vec{\epsilon}_{\vec{k}s}
+      \end{equation}
+
+      If one defines the number operator $\hat{N}_{\vec{k}s} = \hat{a}_{\vec{k}s}^\dagger \hat{a}_{\vec{k}s}$ the hamiltonian can be written as
+
+      \begin{equation*}
+          \hat{H} = \sum_{\vec{k}} \sum_{s = 1}^2 \hbar \omega_k \left(\hat{N}_{\vec{k}s} + \frac{1}{2} \right)
+      \end{equation*}
+
+      and the following relations hold
+
+      \begin{gather*}
+        \hat{a}_{\vec{k}s} \ket{\dots n_{\vec{k}s} \dots} = \sqrt{n_{\vec{k}s}} \ket{\dots n_{\vec{k}s} - 1 \dots} \\
+        \hat{a}_{\vec{k}s}^\dagger \ket{\dots n_{\vec{k}s} \dots} = \sqrt{n_{\vec{k}s} + 1} \ket{\dots n_{\vec{k}s} + 1 \dots} \\
+        \hat{N}_{\vec{k}s} \ket{\dots n_{\vec{k}s} \dots} = n_{\vec{k}s} \ket{\dots n_{\vec{k}s} \dots}
+      \end{gather*}
+
+      Henceforth the focus will be on a single mode, thus labels $\vec{k}s$ are ignored.
+
+
+
+    \paragraph{Thermal states}
+      Number states $\ket{n}$ are eigenstates of the number operator and thus of the hamiltonian, but the expectation value of the electric field vanishes:
+
+      \begin{equation*}
+        % \bra{n} \hat{N} \ket{n} = n, \qquad \bra{n} \hat{N}^2 \ket{n} = n^2 \quad \rightarrow \quad \text{Var}(\hat{N}) = 0 \\
+        \bra{n} \hat{\vec{E}} \ket{n} = 0, \qquad \bra{n} \hat{\vec{E}}^2 \ket{n} = \text{Var}(\hat{\vec{E}}) = \frac{\hbar\omega}{\epsilon_0V}\left(n + \frac{1}{2} \right)
+      \end{equation*}
+
+      If one now considers the electromagnetic field in thermal equilibrium with a bath at temperature $T$ ($\beta = \frac[f]{1}{k_BT}$) what he obtains is an \emph{incoherent} sum of number states, i.e. the thermal state is described by a density matrix
+
+      \begin{equation*}
+        \hat{\rho} = \sum_n p_n \ket{n}\bra{n} = \frac{1}{\mathcal{Z}} e^{-\beta\hat{H}}
+      \end{equation*}
+
+      where $\mathcal{Z} = \text{Tr}[e^{-\beta\hat{H}}] = \sum_n e^{-\beta\hbar\omega(n + \frac{1}{2})} = \frac{e^{-\frac[f]{\beta\hbar\omega}{2}}}{1 - e^{-\beta\hbar\omega}}$.
+      The average number of photons is then
+
+      \begin{align*}
+        \overbar{n} & = \text{Tr}[\hat{N}\hat{\rho}] = \frac{1}{\mathcal{Z}} \sum_n n e^{-\beta\hbar\omega(n + \frac{1}{2})}
+                      = (1 - e^{-\beta\hbar\omega}) \sum_n n e^{-\beta\hbar\omega n} \\
+                    & = (1 - e^{-\beta\hbar\omega}) \left(-\frac{\partial}{\partial(\beta\hbar\omega)} \sum_n e^{-\beta\hbar\omega n} \right)
+                      = (1 - e^{-\beta\hbar\omega}) \left(-\frac{\partial}{\partial(\beta\hbar\omega)} \frac{1}{1 - e^{-\beta\hbar\omega}} \right) \\
+                    & = \frac{1}{e^{\beta\hbar\omega} - 1}
+      \end{align*}
+
+      Now it is easy to find the expression for $p_n$:
+
+      \begin{equation*}
+        p_n = \bra{n} \hat{\rho} \ket{n} = \frac{1}{\mathcal{Z}} e^{-\beta\hbar\omega(n + \frac{1}{2})} = (1 - e^{-\beta\hbar\omega}) e^{-\beta\hbar\omega n} = \frac{1}{\overbar{n} + 1} \left(\frac{\overbar{n}}{\overbar{n} + 1} \right)^n
+      \end{equation*}
+
+      which is the probability of finding $n$ photons in the thermal state and behaves as an exponential distribution.
+
+
+
+    \paragraph{Coherent states}
+      A coherent state is instead defined as the eigenstate of the annihilation operator $\hat{a}\ket{\alpha} = \alpha\ket{\alpha}$ and can be expressed as a \emph{coherent} sum of number states $\ket{\alpha} = \sum_n c_n \ket{n}$. Applying the definition and remebering $\hat{a}\ket{n} = \sqrt{n}\ket{n - 1}$ one easily finds
+
+      \begin{equation*}
+        \ket{\alpha} = e^{-\frac[f]{|\alpha|^2}{2}} \sum_{n = 0}^\infty \frac{\alpha^n}{\sqrt{n!}} \ket{n}
+      \end{equation*}
+
+      This time the probability of finding $n$ photons is given by $|\bra{n}\ket{\alpha}|^2 = \frac{|\alpha|^{2n}}{n!} e^{-|\alpha|^2}$, which is a Poisson distribution with mean $\overbar{n} = |\alpha|^2$. If one takes the expectation value of the electric field operator, one finds plane waves, while the fluctuation of the field is the same as the one computed on the vacuum state $\ket{0}$: the only state that is both a number state and a coherent state.
+
+      \begin{gather*}
+        \bra{\alpha}\hat{\vec{E}} \ket{\alpha} = i \sqrt{\frac{\hbar\omega}{2\epsilon_0V}} \left(\alpha e^{i(\vec{k}\cdot\vec{r} - \omega t)} - \alpha^* e^{-i(\vec{k}\cdot\vec{r} - \omega t)} \right) \vec{\epsilon}, \qquad
+        \text{Var}(\hat{\vec{E}}) = \frac{\hbar\omega}{2\epsilon_0V}
+      \end{gather*}
+
+      Coherent states are well suited for describing laser beams.
+
+
+
+  \subsection{Experimental setup}
+    The experimental apparatus consists of a laser shone onto a disk of sand paper mounted on a motor. The beam reflected by the sand paper is then collected by a single photon detector (SPD) connected to a time tagger with a sensitivity of $\tau = 81 \si{\pico\second}$ that saves a time tag each time the detector clicks.
+    If the sand paper disk is stationary the detector collects a single point of the reflected pattern produced by the sand paper, thus preserving the coherent state. On the other hand if the disk is rotating coherence is lost an the detector is sampling an \emph{effective thermal state}.
+
+  \subsection{Results}
+    \paragraph{Rates}
+      The first thing one can do to analyze the few seconds of collected data is to compute histogram of the rates, i.e. choose a time window large enough ($>10^5\tau$) to have a meaningful statistics with which subdivide the total acquisition time and count how many clicks happened in each window. Doing so one obtains the results in fig \ref{fig:rates}, where if the window is shorter than $10^6\tau$ one can clearly distinguish that the two samples are a thermal and a coherent state. On the other hand at higher window the coherent state is still well recognizable, while the thermal state deviates quite a lot from the exponential distribution. This can be due to the lower statistics but also to the fact that the experimental state is not an \emph{actual thermal state}, and so it follows somewhat of an hybrid between a Poisson and exponential distribution.
+
+      \begin{figure}[H]
+        \centering
+        \resizebox{0.45\textwidth}{!}{\import{img/}{rate_histo_0_fit_w_2.0e+05.pgf}}
+        \resizebox{0.45\textwidth}{!}{\import{img/}{rate_histo_0_fit_w_2.0e+06.pgf}}
+        \caption{Histograms of the collected data at different time windows}
+        \label{fig:rates}
+      \end{figure}
+
+    \paragraph{Quantum random number generation}
+      If one plots the histogram of the time difference between two consecutive clicks one finds fig \ref{fig:time_difference}, where it is clear that in the case of the coherent state the waiting time is exponentially distributed, in agreement with the Poisson distribution for the rates.
+
+      \begin{figure}[H]
+        \centering
+        \resizebox{0.7\textwidth}{!}{\import{img/}{time_difference_histo_0.pgf}}
+        \caption{Histogram of the time between two consecutive clicks.}
+        \label{fig:time_difference}
+      \end{figure}
+
+      One can use this poissonian properties of the coherent states to generate \emph{real} (not \emph{pseudo}) random numbers with a variety of algorithms.
+      Anyways, quite sophisticated tests are necessary to tell apart real random numbers from good pseudo ones.
+
+
+
+\section{Photon indivisibility}
+  \subsection{Theoretical introduction}
+    \paragraph{Spontaneous Parametric Down Conversion (SPDC)}
+      When light interacts with a material it is possible to expand the polarization vector in powers of the incoming electric field (eq \ref{eq:susceptibility} with Einstein convention on repeated indices).
+
+      \begin{equation} \label{eq:susceptibility}
+        P_i = \chi_{ij}^{(1)} E_j + \chi_{ijk}^{(2)} E_j E_k + \dots
+      \end{equation}
+
+      Now, since in second quantization the electric field operator is a sum of creation and annihilation operators (eq \ref{eq:E}), if $\chi^{(2)} \neq 0$ it is possible that a pump photon ($p$) is converted in two photons with lower energy, conventionally called signal ($s$) and idler ($i$). During the conversion process energy and momentum must conserve so the following holds
+
+      \begin{equation*}
+        \begin{cases}
+          \omega_p = \omega_s + \omega_i \\
+          \vec{k}_p = \vec{k}_s + \vec{k}_i
+        \end{cases}
+      \end{equation*}
+
+      meaning that the signal and idler trajectories are distributed on cones with axis $\vec{k}_p$.
+
+      In type II SPDC the polarization of the signal is orthogonal to the one of the idler, meaning that if the non-linear crystal responsible for the conversion is also birefringent the two cones are spatially separated, intersecting each other in two lines. Along those two lines $s$ and $i$ are indistinguishable and anticorrelated in polarization, thus entangled.
+      This is useful because if one detects one of the two photons along one of the previously mentioned lines, he is sure to have the other one on the other line.
+
+    \paragraph{Light on a beam splitter}
+      A 50-50 beam splitter has an equal probability of transmitting ($t$) or reflecting ($r$) every photon that passes through it, but the probability of a single photon being reflected \emph{and} transmitted is 0 (indivisibility of the single photon). If one defines $\mathbb{P}(ch)$ the probability of an ideal detector clicking on channel $ch$ one can then compute the quantity
+
+      \begin{equation*}
+        g^{(2)} := \frac{\mathbb{P}(r \wedge t)}{\mathbb{P}(r)\mathbb{P}(t)}
+      \end{equation*}
+
+      and for the single photon it is trivially zero. On the other hand if one considers classical light hitting the beam splitter, now the intensitiy of the beam is equally and independently split on the two channels and so $\mathbb{P}(r \wedge t) = \mathbb{P}(r)\mathbb{P}(t)$ and thus $g^{(2)} = 1$.
+
+
+  \subsection{Experimental setup}
+    The apparatus is made of a laser with wavelenght $\lambda = 405\si{\nano\meter}$ impinging on an SPDC birefringent crystal. The two optical paths corresponding to the entangled states are redirected one (idler) to a Single Photon Detector (gate ($g$)), the other (signal) to a 50-50 beam splitter. Other two SPDs collect the photons either transmitted ($t$) or reflected ($r$). Each of the three detectors is then connected to a time tagger in order to be able to compute coincidences a-posteriori.\\
+    Since the efficiency of the conversion is very low ($\sim 10^{-7}$) most of the pump photons pass straight through the crystal and end on a beam stopper. This low efficiency, however, means that the events are spaced enough in time to be distinguished by the detectors.\\
+    The data consists of 45 seconds of acquisition with around 3.6 millions of detector clicks.
+
+  \subsection{Results}
+    \paragraph{Computation of the coincidences}
+      To compute coincidences whenever the gate clicks one searches for the nearest signal from the $t$ or $r$ channels, obtaining an histogram of the time delays in fig \ref{fig:delays}.
+
+      \begin{figure}[H]
+        \centering
+        \resizebox{0.7\textwidth}{!}{\import{img/}{delays.pgf}}
+        \caption{Histogram and gaussian fit of the time delays between the gate and the transmitted/reflected photons. The centroids are at 54 and 22 $\tau$ while the width of the gaussians is $\sigma \approx 6 \tau$.}
+        \label{fig:delays}
+      \end{figure}
+
+      By setting a $5\sigma$ threshold from the centroid of each distribution it is possible to epurate the raw data from some of the noise obtaining the results in tab \ref{tab:coincidences}, from which one can obtain an estimate of $g^{(2)}$:
+
+      \begin{equation*}
+        g^{(2)} = \frac{N_{gtr}N_g}{N_{gr}N_{gt}} = 0.02 \pm 0.01
+      \end{equation*}
+
+      which is compatible with the hypothesis of indivisible photons and completely incompatible with the hypothesis of classical light.\\
+      It is interesting to try to compute coincidences with much larger thresholds. For example at $50 \sigma$ there are 43 triple coincidences and $g^{(2)} = 0.25 \pm 0.04$, while at $500 \sigma$ one has 534 triple coincidences and $g^{(2)} = 0.83 \pm 0.04$. This makes sense because as the tolerance on the coincidences increases one is averaging out the effect of light being made of single photons and thus obtaining a more classical description.
+
+      \begin{table}
+        \centering
+        \caption{Total number of events detected with poissonian errors, coincidence threshold set at $5\sigma$}
+        \label{tab:coincidences}
+        \begin{tabular}{cc}
+          \toprule
+          $N_g$ & $(1.554 \pm 0.001) \cdot 10^6$ \\
+          $N_t$ & $(1.000 \pm 0.001) \cdot 10^6$ \\
+          $N_r$ & $(1.056 \pm 0.001) \cdot 10^6$ \\
+          $N_{gt}$ & $(1.48 \pm 0.01) \cdot 10^4$ \\
+          $N_{gr}$ & $(1.39 \pm 0.01) \cdot 10^4$ \\
+          $N_{gtr}$ & $3 \pm 2$ \\
+          \bottomrule
+        \end{tabular}
+      \end{table}
+
+    \paragraph{Real detectors}
+      A real detector has an efficiency $\epsilon$ (probability of clicking when hit by a photon) and a dark count rate $\gamma^*$, i.e. in a time interval of $dt$ the probability of the detector clicking is $\gamma = \gamma^* dt$ regardless it being hit or not by a photon. In this discussion $\gamma^*$ accounts also for the effect of ambient photons triggering the SPD and $\epsilon$ also for the losses along the optical path. If the probability of the idler hitting the gate detector in the time interval $dt$ is $\eta = \eta^* dt$ and one assumes that $\epsilon$ and $\gamma^*$ are the same for each detector it is possible to write the following expressions for the probability of the events $g,t,r,gt,gr,gtr$ in the quantum hypothesis:
+
+      \begin{align*}
+        p_g & = \eta \left(\epsilon + (1 - \epsilon)\gamma \right) + (1 - \eta)\gamma = \eta\epsilon + \left(1 - \eta\epsilon \right)\gamma \\
+        p_t = p_r & = \eta \left(\frac{1}{2}\epsilon + \frac{1}{2}(1 - \epsilon)\gamma + \frac{1}{2}\gamma \right) + (1 - \eta)\gamma = \frac{\eta\epsilon}{2} + \left(1 - \frac{\eta\epsilon}{2} \right)\gamma \\
+        p_{gt} = p_{gr} & = \eta \left(\epsilon \frac{1}{2}\epsilon + (1-\epsilon)\gamma\frac{1}{2}\epsilon + \epsilon\frac{1}{2}\gamma + (1-\epsilon)\gamma\frac{1}{2}\gamma + \epsilon\frac{1}{2}(1-\epsilon)\gamma + (1-\epsilon)\gamma\frac{1}{2}(1-\epsilon)\gamma \right) \\
+        & + (1-\eta)\gamma\gamma = \frac{\epsilon^2}{2}\eta + \left(\frac{3\epsilon - 2\epsilon^2}{2}\eta \right)\gamma + \left(1 - \frac{3\epsilon - \epsilon^2}{2}\eta \right)\gamma^2 \\
+        p_{gtr} & = \eta \left(\epsilon\epsilon\gamma + (1-\epsilon)\gamma\epsilon\gamma + \epsilon(1-\epsilon)\gamma\gamma + (1-\epsilon)\gamma(1-\epsilon)\gamma\gamma \right) + (1 - \eta)\gamma\gamma\gamma \\
+        & = \left(\epsilon^2\eta \right)\gamma + \left(2\epsilon(1-\epsilon)\eta \right)\gamma^2 + \left(1 - (2\epsilon - \epsilon^2)\eta \right)\gamma^3
+      \end{align*}
+
+      from which the expression of $g^{(2)}$ can be derived:
+
+      \begin{equation*}
+        g^{(2)} = \frac{4\gamma\left(\epsilon\eta + (1 - \epsilon\eta)\gamma \right)\left(\epsilon^2\eta + 2\epsilon(1-\epsilon)\eta\gamma + \left(1 - (2\epsilon - \epsilon^2)\eta \right)\gamma^2 \right)}{\left(\epsilon^2\eta + (3\epsilon-2\epsilon^2)\eta\gamma + \left(2 - (3\epsilon - \epsilon^2)\eta \right)\gamma^2 \right)^2}
+      \end{equation*}
+
+      It is interesting to see that in the limit $\gamma \rightarrow 0$, i.e. no dark counts, $g^{(2)} \rightarrow 0$ as in the quantum result for an ideal detector, while in the limit $\epsilon \rightarrow 0$, i.e. only dark counts which are uncorrelated clicks, $g^{(2)} \rightarrow 1$ independently on $\epsilon$, which is the classical result.\\
+      If one also inserts back the explicit dependence on $dt$, which in practice is the tolerance time for accepting coincidences, turns out that $g^{(2)} = \mathcal{O}(dt)$ which is in agreement with what found before.
+
+      With $dt = 2 \cdot 5\sigma = 60\tau = 4.9 \si{\nano\second}$ experimentally there are no gate-gate coincidences, meaning that $\epsilon\eta\gamma \ll \epsilon\eta,\gamma$.
+      This allows to simplify the previous equations and obtain an estimate of the parameters of the detectors. If $t_{tot} = 45 \si{\second}$ is the total acquisition time one gets:
+
+      \begin{gather*}
+        \begin{cases}
+          \eta\epsilon + \gamma \approx p_g = N_g \frac{dt}{t_{tot}} = (1.678 \pm 0.001) \cdot 10^{-4} \\
+          \frac{\eta\epsilon}{2} + \gamma \approx \frac{p_r + p_t}{2} = \frac{N_r + N_t}{2}\frac{dt}{t_{tot}} = (1.1108 \pm 0.0007) \cdot 10^{-4}
+        \end{cases}
+        \quad \rightarrow \quad
+        \begin{cases}
+          \eta\epsilon = (1.135 \pm 0.003) \cdot 10^{-4} \\
+          \gamma = (5.43 \pm 0.02) \cdot 10^{-5}
+        \end{cases}
+      \end{gather*}
+
+      It is important to notice that $\eta\epsilon$ and $\gamma$ have been derived by the counts of single detectors, without considering any coincidences, meaning that one would have obtained the same result with the hypothesis of classical light (for which $g^{(2)} \geq 1 \quad \forall \epsilon$).\\
+      At this point one can calculate the quantum prediction for $g^{(2)}$ as a function of the detector efficiency, obtaining fig \ref{fig:q_g2} where it is clear that even if the detectors have a terribly low efficiency the apparatus is still able to distinguish quantum from classical light.
+
+      \begin{figure}[H]
+        \centering
+        \resizebox{0.7\textwidth}{!}{\import{img/}{g2.pgf}}
+        \caption{Quantum prediction of $g^{(2)}$ with the found values for $\eta\epsilon$ and $\gamma$ as a function of $\epsilon$. The dashed line represents the specific value of $\epsilon$ found in eq \ref{eq:epsilon}.}
+        \label{fig:q_g2}
+      \end{figure}
+
+      By approximating the formula for $p_{gr}$ it is possible to have an estimate of the efficiency of the detectors:
+
+      \begin{gather} \label{eq:epsilon}
+        \gamma^2 + \frac{\eta\epsilon}{2}\left(\epsilon - (3 - \epsilon)\gamma \right) \approx \frac{p_{gr} + p_{gt}}{2} = \frac{N_{gr} + N_{gt}}{2}\frac{dt}{t_{tot}} = (1.553 \pm 0.009)
+        \rightarrow \epsilon = 0.0275 \pm 0.0002
+      \end{gather}
+
+      From this estimate one can find the incident photon rate $\eta^*$ and the dark count rate $\gamma^*$:
+
+      \begin{gather*}
+        \eta^* = (8.51 \pm 0.07) \cdot 10^5 \si{\hertz} \\
+        \gamma^* = (1.117 \pm 0.004) \cdot 10^4 \si{\hertz}
+      \end{gather*}
+
+      The results of $\epsilon$ and $\gamma^*$ are quite different from the ones tabulated for the used detector, which predict an efficiency around $50\%$ and a dark count rate of the order of $100 \si{\hertz}$. This discrepancy is mostly due to the fact that in these calculations $\epsilon$ and $\gamma^*$ account also from factors external to the detector. Moreover the assumption that $\epsilon$ and $\gamma^*$ are the same for each detector would imply that also the losses along the three different optical paths and the amount of ambient photon hitting each detector are the same, which probably is not such a good approximation after all (if one looks at the counts in tab \ref{tab:coincidences} $N_r$ and $N_t$ are quite different).
+
+  \section*{Conclusion}
+    Through this two experiments one can see that purely quantum effects are quite easily detectable with relatively simple table-top experimental setups, proving that in fact, the quantum world is not as far and hidden as one might think.
+
+
+\end{document}
