@@ -1,0 +1,51 @@
+\usepackage[top=2cm,bottom=2cm,left=2cm,right=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{import}
+\usepackage{float}
+\usepackage{subfigure}
+% \usepackage{subfig}
+\usepackage[pdftex]{graphicx}
+% \usepackage{graphicx}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{xspace}
+\usepackage{tabularx}
+\usepackage{indentfirst}
+\usepackage{wrapfig,booktabs}
+%\usepackage[small]{caption}
+% \usepackage{subcaption}
+\usepackage{eucal}
+\usepackage{eso-pic}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{afterpage}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage{cite}
+\usepackage{multirow,multicol}
+\usepackage{setspace}
+\usepackage[version=4]{mhchem}
+\usepackage{nicefrac}
+\usepackage{siunitx}
+
+\usepackage{caption}
+\captionsetup{tableposition=top,font=small,width=0.8\textwidth}
+%\usepackage[table]{xcolor}
+\usepackage[arrowdel]{physics}
+\usepackage{mathtools}
+\usepackage{tablefootnote}
+\usepackage{enumitem}
+
+\setlist[description]{font={\scshape}} %style=unboxed,style=nextline
+\usepackage{floatflt}
+\usepackage{commath}
+\usepackage{bm}
+\usepackage{ifthen}
+\usepackage{comment}
+\usepackage[colorinlistoftodos,textsize=tiny]{todonotes}
+
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\let\oldfrac\frac
+\renewcommand{\frac}[3][d]{\ifthenelse{\equal{#1}{d}}{\oldfrac{#2}{#3}}{\nicefrac{#2}{#3}}}
