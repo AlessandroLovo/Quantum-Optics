@@ -106,6 +106,81 @@
       \end{gather*}
 
 
+  \section{Bell test}
+    With the same apparatus it is possible to perform a violation of the Bell inequalities thus proving experimentally that a hidden variable theory does not describe the physical world. To do so let us consider the two SPDs as two observers who are able to measure their photon in two bases.
+    For the first observer the base used is denoted with $x$ while the result of the measurement can be denoted with $a$ and assumes value 0 if the photon is projected onto the first element of the base and 1 otherwise. Analogously for the second observer the two variables are denoted with $y$ for the choice of the base and $b$ for the result of the measurement.
+
+    \begin{gather*}
+      \mathcal{B}_1(x) =
+      \begin{cases}
+        \left\{ \ket{H}, \ket{V} \right\} & x = 0 \\
+        \left\{ \ket{D}, \ket{A} \right\} & x = 1
+      \end{cases}
+      \qquad
+      \mathcal{B}_2(y) =
+      \begin{cases}
+        \left\{ \ket{\frac[f]{\pi}{8}}, \ket{\frac[f]{5\pi}{8}} \right\} & y = 0 \\
+        \left\{ \ket{-\frac[f]{\pi}{8}}, \ket{\frac[f]{3\pi}{8}} \right\} & y = 1
+      \end{cases}
+    \end{gather*}
+
+    Similarly to what has been done in the previous experiment, we took 16 different measurement of coincidences (one for each combination of $x,y,a,b$) and cropping all the 16 datasets to the lenght of the shortest ($7.84 \si{.\second}$) we obtained the results in tab \ref{tab:Bell_coinc} where the number of coincidences is denoted as $N_{ab|xy}$.
+
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{cccccccc}
+        \toprule
+        $x$ & $a$ & $y$ & $b$ & $N_{ab|xy}$ \\
+        \midrule
+        0 & 0 & 0 & 0 & $3460 \pm 60$ \\
+        0 & 0 & 0 & 1 & $590 \pm 20$ \\
+        0 & 1 & 0 & 0 & $710 \pm 30$ \\
+        0 & 1 & 0 & 1 & $2850 \pm 50$ \\
+        \midrule
+        0 & 0 & 1 & 0 & $3300 \pm 60$ \\
+        0 & 0 & 1 & 1 & $480 \pm 20$ \\
+        0 & 1 & 1 & 0 & $380 \pm 20$ \\
+        0 & 1 & 1 & 1 & $3360 \pm 60$ \\
+        \midrule
+        1 & 0 & 0 & 0 & $3290 \pm 60$ \\
+        1 & 0 & 0 & 1 & $600 \pm 20$ \\
+        1 & 1 & 0 & 0 & $760 \pm 30$ \\
+        1 & 1 & 0 & 1 & $2960 \pm 50$ \\
+        \midrule
+        1 & 0 & 1 & 0 & $980 \pm 30$ \\
+        1 & 0 & 1 & 1 & $2830 \pm 50$ \\
+        1 & 1 & 1 & 0 & $3110 \pm 60$ \\
+        1 & 1 & 1 & 1 & $730 \pm 30$ \\
+        \bottomrule
+      \end{tabular}
+      \caption{Coincidences for the Bell test.}
+      \label{tab:Bell_coinc}
+    \end{table}
+
+    From these coincidences one can define the probability of each combination $x,y,a,b$ as
+    \begin{equation*}
+      P(a,b|x,y) := \frac{N_{ab|xy}}{\sum_{a'b'}N_{a'b'|xy}}
+    \end{equation*}
+    and from those probabilities the quantities
+    \begin{equation*}
+      \langle E_{xy} \rangle := P(0,0|x,y) + P(1,1|x,y) - P(0,1|x,y) - P(1,0|x,y)
+    \end{equation*}
+    that result to be
+    \begin{gather*}
+      \langle E_{00} \rangle = 0.659 \pm 0.009 \qquad \langle E_{01} \rangle = 0.772 \pm 0.007 \\
+      \langle E_{10} \rangle = 0.643 \pm 0.009 \qquad \langle E_{11} \rangle = -0.55 \pm 0.01
+    \end{gather*}
+
+    At this point one can define the quantity
+    \begin{equation*}
+      CHSH := \langle E_{00} \rangle + \langle E_{01} \rangle + \langle E_{10} \rangle - \langle E_{11} \rangle = 2.63 \pm 0.02
+    \end{equation*}
+    that in a model with hidden variables is limited by $CHSH < 2$, while for quantum mechanics the condition is relaxed to $CHSH < 2\sqrt{2} \approx 2.83$. The result we found is around $36\sigma$ beyond the hidden variable limit and well within the quantum one, thus proving that the hidden variable theory is incompatible with experimental results.
+
+
+
+
+
 
 
 
