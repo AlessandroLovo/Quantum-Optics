@@ -178,6 +178,43 @@
     that in a model with hidden variables is limited by $CHSH < 2$, while for quantum mechanics the condition is relaxed to $CHSH < 2\sqrt{2} \approx 2.83$. The result we found is around $36\sigma$ beyond the hidden variable limit and well within the quantum one, thus proving that the hidden variable theory is incompatible with experimental results.
 
 
+  \section{Quantum Tomography}
+    As in the medical tomography seeing an organ through many lines of sight allows to reconstruct the 3D structure of it, similarly it is possible to reconstruct the density matrix of a quantum system by measuring it on different states. The minimum amount of measurements needed for a two-qubit system is 16 and the states on which the single photon will be projected are the following:
+    \begin{gather*}
+      \ket{H}, \quad \ket{V}, \quad \ket{D} = \frac{\ket{H} + \ket{V}}{\sqrt{2}},
+      \quad \ket{R}  = \frac{\ket{H} -i \ket{V}}{\sqrt{2}}, \quad \ket{L}  = \frac{\ket{H} +i \ket{V}}{\sqrt{2}}
+    \end{gather*}
+    where the last two states are the circularly polarized ones and are measured by inserting in the optical path of the photons a quarter-wave plate.
+    The measurements are performed on three different states and are reported in tab \ref{tab:tomo_coinc}.
+
+    \begin{table}[H]
+      \centering
+      \begin{tabular}{cccccccc}
+        \toprule
+        $j$ & photon 1 & photon 2 & $n_j^{(1)}$ & $n_j^{(2)}$ & $n_j^{(3)}$ \\
+        \midrule
+        1 & $\ket{H}$ & $\ket{H}$ & $2350 \pm 50$ & $2280 \pm 50$ & $2280 \pm 50$ \\
+        2 & $\ket{H}$ & $\ket{V}$ & $86 \pm 9$ & $210 \pm 10$ & $210 \pm 10$ \\
+        3 & $\ket{V}$ & $\ket{V}$ & $2050 \pm 50$ & $2040 \pm 50$ & $2040 \pm 50$ \\
+        4 & $\ket{V}$ & $\ket{H}$ & $110 \pm 10$ & $160 \pm 10$ & $160 \pm 10$ \\
+        \midrule
+        5 & $\ket{R}$ & $\ket{H}$ & $1150 \pm 30$ & $1150 \pm 30$ & $1150 \pm 30$ \\
+        6 & $\ket{R}$ & $\ket{V}$ & $1250 \pm 40$ & $1250 \pm 40$ & $1250 \pm 40$ \\
+        7 & $\ket{D}$ & $\ket{V}$ & $1100 \pm 30$ & $1100 \pm 30$ & $1100 \pm 30$ \\
+        8 & $\ket{D}$ & $\ket{H}$ & $1190 \pm 30$ & $1190 \pm 30$ & $1190 \pm 30$ \\
+        9 & $\ket{D}$ & $\ket{R}$ & $1000 \pm 30$ & $1000 \pm 30$ & $1000 \pm 30$ \\
+        10 & $\ket{D}$ & $\ket{D}$ & $2150 \pm 50$ & $280 \pm 20$ & $1700 \pm 40$ \\
+        11 & $\ket{R}$ & $\ket{D}$ & $850 \pm 30$ & $850 \pm 30$ & $850 \pm 30$ \\
+        12 & $\ket{H}$ & $\ket{D}$ & $1250 \pm 40$ & $1250 \pm 40$ & $1250 \pm 40$ \\
+        13 & $\ket{V}$ & $\ket{D}$ & $1200 \pm 30$ & $1200 \pm 30$ & $1200 \pm 30$ \\
+        14 & $\ket{H}$ & $\ket{L}$ & $1080 \pm 30$ & $1080 \pm 30$ & $1080 \pm 30$ \\
+        15 & $\ket{H}$ & $\ket{L}$ & $1260 \pm 40$ & $1260 \pm 40$ & $1260 \pm 40$ \\
+        16 & $\ket{R}$ & $\ket{L}$ & $2100 \pm 50$ & $140 \pm 10$ & $1690 \pm 40$ \\
+        \bottomrule
+      \end{tabular}
+      \caption{Number of coincidences measured in the 16 different configurations, for three different states.}
+      \label{tab:tomo_coinc}
+    \end{table}
 
 
 
@@ -188,5 +225,9 @@
 
 
 
+
+  \begin{thebibliography}{100}
+    \bibitem{rif:tomo} D.F.V. James et al. \emph{Measurements of qubits} Phys. Rev. A 64, 052312
+  \end{thebibliography}
 
 \end{document}
