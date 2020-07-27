@@ -318,6 +318,29 @@
         \label{tab:tomo_phys}
       \end{table}
 
+    \subsection{Maximum likelihood}
+      The idea of this second method is to have a density matrix depending on 16 real parameters $\left\{t_i \right\}_{i=1}^{16}$ that by definition satisfies all the requirements to be a physical density matrix. In practice this is achieved as follows:
+      \begin{gather} \label{eq:T}
+        \hat{\rho}_p = \frac{\hat{T}^\dagger \hat{T}}{\text{Tr}[\hat{T}^\dagger \hat{T}]}, \qquad
+        \hat{T} =
+        \begin{pmatrix}
+          t_1 & 0 & 0 & 0 \\
+          t_5 + it_6 & t_2 & 0 & 0 \\
+          t_{11} + it_{12} & t_7 + it_8 & t_3 & 0 \\
+          t_{15} + it_{16} & t_{13} + it_{14} & t_9 + it_{10} & t_4
+        \end{pmatrix}
+      \end{gather}
+
+      At this point one can define the simplified likelihood function (which is actually very similar to a $\chi^2$) to be minimized:
+      \begin{equation*}
+        \mathcal{L}(\{t_i\}; \{n_j\}) = \sum_{j=1}^{16} \frac{\left(\bra{\psi_j}\hat{\rho}_p \ket{\psi_j} - \frac[f]{n_j}{N} \right)^2 }{2\bra{\psi_j}\hat{\rho}_p \ket{\psi_j}}
+      \end{equation*}
+      where $\ket{\psi_j}$ is the two photon state measured in measurement $j$, e.g.
+      \begin{equation*}
+        \ket{\psi_5} = \ket{RH} = \frac{1}{\sqrt{2}} \left(1\cdot\ket{HH} + 0\cdot\ket{HV} -i\cdot\ket{VH} +0\cdot\ket{VV} \right)
+      \end{equation*}
+      To minimize the likelihood the BFGS algorithm \cite{rif:bfgs} is used, but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
+
 
 
 
@@ -331,6 +354,7 @@
 
   \begin{thebibliography}{100}
     \bibitem{rif:tomo} D.F.V. James et al. \emph{Measurements of qubits} Phys. Rev. A 64, 052312
+    \bibitem{rif:bfgs} Wright and Nocedal \emph{Numerical Optimization}, 1999, pg. 198
   \end{thebibliography}
 
 \end{document}
