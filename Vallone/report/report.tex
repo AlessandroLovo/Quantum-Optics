@@ -333,13 +333,73 @@
 
       At this point one can define the simplified likelihood function (which is actually very similar to a $\chi^2$) to be minimized:
       \begin{equation*}
-        \mathcal{L}(\{t_i\}; \{n_j\}) = \sum_{j=1}^{16} \frac{\left(\bra{\psi_j}\hat{\rho}_p \ket{\psi_j} - \frac[f]{n_j}{N} \right)^2 }{2\bra{\psi_j}\hat{\rho}_p \ket{\psi_j}}
+        L(\{t_i\}; \{n_j\}) = \sum_{j=1}^{16} \frac{\left(\bra{\psi_j}\hat{\rho}_p \ket{\psi_j} - \frac[f]{n_j}{N} \right)^2 }{2\bra{\psi_j}\hat{\rho}_p \ket{\psi_j}}
       \end{equation*}
       where $\ket{\psi_j}$ is the two photon state measured in measurement $j$, e.g.
       \begin{equation*}
         \ket{\psi_5} = \ket{RH} = \frac{1}{\sqrt{2}} \left(1\cdot\ket{HH} + 0\cdot\ket{HV} -i\cdot\ket{VH} +0\cdot\ket{VV} \right)
       \end{equation*}
       To minimize the likelihood the BFGS algorithm \cite{rif:bfgs} is used, but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
+
+      Minimizing the likelihood, and for now ignoring the uncertainties, we obtain the following density matrices:
+      \begin{gather*}
+        \hat{\rho}^{(1)} =
+        \begin{pmatrix}
+          0.504  & 0.004 -i0.009 & 0.004 -i0.019 & 0.404 -i0.116 \\
+          0.004 +i0.009 & 0.019  & -0.001 -i0.018 & 0.009 +i0.026 \\
+          0.004 +i0.019 & -0.001 +i0.018 & 0.024  & 0.013 +i0.010 \\
+          0.404 +i0.116 & 0.009 -i0.026 & 0.013 -i0.010 & 0.453
+        \end{pmatrix}
+        \\
+        \hat{\rho}^{(2)} =
+        \begin{pmatrix}
+          0.486  & 0.001 +i0.003 & -0.006 -i0.018 & -0.412 -i0.117 \\
+          0.001 -i0.003 & 0.045  & 0.018 -i0.028 & 0.001 +i0.020 \\
+          -0.006 +i0.018 & 0.018 +i0.028 & 0.035  & 0.016 +i0.007 \\
+          -0.412 +i0.117 & 0.001 -i0.020 & 0.016 -i0.007 & 0.434
+        \end{pmatrix}
+        \\
+        \hat{\rho}^{(3)} =
+        \begin{pmatrix}
+          0.484  & -0.001 -i0.002 & -0.003 -i0.016 & 0.217 -i0.117 \\
+          -0.001 +i0.002 & 0.045  & -0.002 -i0.037 & -0.003 +i0.023 \\
+          -0.003 +i0.016 & -0.002 +i0.037 & 0.035  & 0.018 +i0.007 \\
+          0.217 +i0.117 & -0.003 -i0.023 & 0.018 -i0.007 & 0.436
+        \end{pmatrix}
+      \end{gather*}
+      A graphical representation is reported in figs \ref{fig:tomo_li_1}-\ref{fig:tomo_ml_3}.
+
+      \begin{figure}
+        \centering
+        \begin{subfigure}[$\hat{\rho}^{(1)}$ via linear inversion]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_li_1.pgf}}
+          \label{fig:tomo_li_1}}
+        \end{subfigure}
+        \begin{subfigure}[$\hat{\rho}^{(1)}$ via maximum likelihood]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_ml_1.pgf}}
+          \label{fig:tomo_ml_1}}
+        \end{subfigure} \\
+        \begin{subfigure}[$\hat{\rho}^{(2)}$ via linear inversion]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_li_2.pgf}}
+          \label{fig:tomo_li_2}}
+        \end{subfigure}
+        \begin{subfigure}[$\hat{\rho}^{(2)}$ via maximum likelihood]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_ml_2.pgf}}
+          \label{fig:tomo_ml_2}}
+        \end{subfigure} \\
+        \begin{subfigure}[$\hat{\rho}^{(3)}$ via linear inversion]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_li_3.pgf}}
+          \label{fig:tomo_li_3}}
+        \end{subfigure}
+        \begin{subfigure}[$\hat{\rho}^{(3)}$ via maximum likelihood]{
+          \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_ml_3.pgf}}
+          \label{fig:tomo_ml_3}}
+        \end{subfigure}
+        \caption{Graphical representation of the density matrices: in blue-purple the real part, in orange-red the imaginary part.}
+      \end{figure}
+
+
+
 
 
 
