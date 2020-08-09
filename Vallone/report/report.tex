@@ -29,7 +29,7 @@
   By tuning the angle $\alpha$ of the half-wave plate it is possible to measure any linear polarization $\ket{\theta} = \cos{\theta}\ket{H} + \sin{\theta}\ket{V}$ with the simple relation $\theta = 2\alpha$.
   The signals of the SPDs are sent to a time tagger in order to be able to do an a-posteriori coincidence analysis.
 
-  \par{Coincidence analysis}
+  \paragraph{Coincidence analysis}
   The raw data of an acquisition consist of a list of timetags corresponding to the clicks of each of the two detectors expressed in timesteps of the time tagger $\tau = 80.955\si{.\pico\second}$. To extract the coincidences from it, first a histogram of the time differences between the two detectors is plotted and fitted with a gaussian with centroid $\mu$ and dispersion $\sigma$ (fig \ref{fig:hist}). At this point one can set a threshold $thr_{c} = 2\sigma$ for accepting coincidences, namely the number of coincidences $N$ is simply the number of points in the histogram for which $|\frac[f]{\Delta t}{\tau} - \mu| < thr_{c}$. To this value can be then assosciated a poissonian error $\sigma(N) = \sqrt{N}$.
 
   \begin{figure}[H]
@@ -218,7 +218,7 @@
 
     At this point there are two methods of performing the quantum tomography, both described in \cite{rif:tomo}.
 
-    \subparagraph{Linear inversion}
+    \subsection{Linear inversion}
       The outcomes of the measurements $n_j$ are a linear function of the entries of the density matrix and thus this relations can be iverted obtaining
       \begin{gather*}
         \hat{\rho} = \frac{1}{N}\sum_{j = 1}^{16} n_j \hat{M}_j
@@ -331,7 +331,7 @@
         \end{pmatrix}
       \end{gather}
 
-      At this point one can define the simplified likelihood function (which is actually very similar to a $\chi^2$) to be minimized:
+      At this point one can define the likelihood function $L^*$ and the simplified likelihood $L = -\log{L^*}$ (which has the shape of a Pearson's $\chi^2$):
       \begin{equation*}
         L(\{t_i\}; \{n_j\}) = \sum_{j=1}^{16} \frac{\left(\bra{\psi_j}\hat{\rho}_p \ket{\psi_j} - \frac[f]{n_j}{N} \right)^2 }{2\bra{\psi_j}\hat{\rho}_p \ket{\psi_j}}
       \end{equation*}
@@ -339,9 +339,9 @@
       \begin{equation*}
         \ket{\psi_5} = \ket{RH} = \frac{1}{\sqrt{2}} \left(1\cdot\ket{HH} + 0\cdot\ket{HV} -i\cdot\ket{VH} +0\cdot\ket{VV} \right)
       \end{equation*}
-      To minimize the likelihood the BFGS algorithm \cite{rif:bfgs} is used, but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
+      Maximizing $L^*$ is equivalent to the minimization of $L$ which is performed via the BFGS algorithm \cite{rif:bfgs}; but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
 
-      Minimizing the likelihood, and for now ignoring the uncertainties, we obtain the following density matrices:
+      Minimizing the likelihood, we obtain the following density matrices:
       \begin{gather*}
         \hat{\rho}^{(1)} =
         \begin{pmatrix}
@@ -395,20 +395,90 @@
           \resizebox{0.47\textwidth}{!}{\import{img/}{tomo_ml_3.pgf}}
           \label{fig:tomo_ml_3}}
         \end{subfigure}
-        \caption{Graphical representation of the density matrices: in blue-purple the real part, in orange-red the imaginary part.}
+        \caption{Graphical representation of the density matrices: in blue ($>0$) and purple ($<0$) the real part, in orange ($>0$) red ($<0$) the imaginary part.}
       \end{figure}
 
+      \paragraph{Error estimation}
+        The poissonian error on the data is accounted in the denominator of the likelihood and the BFGS algorithm gives the best set of $t$ parameters to minimize such likelihood. However it doesn't estimate the error on the best parameters and hence on the predicted density matrix. Before starting to tackle this task let us consider two triangular matrices of $t$ parameters: $\hat{T}$ and $\hat{T}' = \alpha\hat{T}$. Then:
+        \begin{equation*}
+          \hat{\rho}_p' = \frac{\hat{T}'^\dagger \hat{T}'}{\text{Tr}[\hat{T}'^\dagger \hat{T}']}
+          = \frac{\alpha^*\alpha\hat{T}^\dagger \hat{T}}{\text{Tr}[\alpha^*\alpha\hat{T}^\dagger \hat{T}]}
+          = \frac{\hat{T}^\dagger \hat{T}}{\text{Tr}[\hat{T}^\dagger \hat{T}]}
+          = \hat{\rho}_p
+        \end{equation*}
+        For this reason one get rid of this normalization freedom by fixing $t_1 = 1$.
+
+        The first thing we can do is to plot $L$ as a function of each one of the $t$ parameters keeping the other fixed at their best value.
+        If we do so for the first state we obtain the plots in fig \ref{fig:tomo_ml_1_t} where one can observe that within the Full Width Half Maximum (FWHM) of $L^*$ there are multiple minima for $t_3, t_6, t_8$, so one should expect a pretty high error on the density matrix elements.
+
+        \begin{figure}[H]
+          \centering
+          \resizebox{0.45\textwidth}{!}{\import{img/}{tomo_ml_1_t2-4.pgf}}
+          \resizebox{0.45\textwidth}{!}{\import{img/}{tomo_ml_1_t5-8.pgf}}\\
+          \resizebox{0.45\textwidth}{!}{\import{img/}{tomo_ml_1_t9-12.pgf}}
+          \resizebox{0.45\textwidth}{!}{\import{img/}{tomo_ml_1_t13-16.pgf}}
+          \caption{The dashed line is at level $L_{min} + \log{2}$, corresponding to the FWHM of the real likelihood $L^*$.}
+          \label{fig:tomo_ml_1_t}
+        \end{figure}
+
+        If one tries to do a Metropolis Monte Carlo random walk on the $t$ space to 'explore' the likelihood one would find that values of the $t$ parameters inside of the FWHM of $L^*$ yield density matrices completely different from the optimal one found with the BFGS algorithm. For this reason the errors predicteed in such way are high to the point of being meaningless.
+
+        So, since there is no easy way to estimate a meaningful error on the density matrices predicted via the maximum likelihood, and the optimal density matrix found with this method is not very different from the one calculated with the linear inversion (see figs \ref{fig:tomo_li_1}-\ref{fig:tomo_ml_3}), one could use the error computed with the linear inversion as an order of magnitude estimate of the one of the maximum likelihood result.
+
+      \subsection{Fidelity}
+        The three states analyzed are actually the experimental attempt to create three particular states: $\ket{\phi^+}, \ket{\phi^-}$ and a decoherence state. More formally
+        \begin{gather*}
+          \hat{\rho}^{(1)}_{th} = \frac{\ket{HH} + \ket{VV}}{\sqrt{2}}\frac{\bra{HH} + \bra{VV}}{\sqrt{2}} =
+          \begin{pmatrix}
+            0.5 & 0 & 0 & 0.5 \\
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 \\
+            0.5 & 0 & 0 & 0.5
+          \end{pmatrix} \\
+          \hat{\rho}^{(2)}_{th} = \frac{\ket{HH} - \ket{VV}}{\sqrt{2}}\frac{\bra{HH} - \bra{VV}}{\sqrt{2}} =
+          \begin{pmatrix}
+            0.5 & 0 & 0 & -0.5 \\
+            0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 \\
+            -0.5 & 0 & 0 & 0.5
+          \end{pmatrix} \\
+          \hat{\rho}^{(3)}_{th}(p) = p\frac{\ket{HH} + \ket{VV}}{\sqrt{2}}\frac{\bra{HH} + \bra{VV}}{\sqrt{2}} + (1 - p)\frac{1}{4}\mathbb{I} =
+          \begin{pmatrix}
+            0.25(1+p) & 0 & 0 & 0.5p \\
+            0 & 0.25(1-p) & 0 & 0 \\
+            0 & 0 & 0.25(1-p) & 0 \\
+            0.5p & 0 & 0 & 0.25(1+p)
+          \end{pmatrix}
+        \end{gather*}
+        where the decoherence state is a classical mixture, depending on the parameter $p$, of the maximally entangled state $\ket{\psi^+}$ with the maximally mixed state.
+
+        If $\rho$ is a density matrix and $\psi$ a pure state the fidelity can be defined as follows:
+        \begin{gather*}
+          F(\psi_1, \psi_2) = |\braket{\psi_1}{\psi_2}|^2 \\
+          F(\rho,\psi) = \bra{\psi}\rho\ket{\psi} \\
+          F(\rho_1,\rho_2) = \left(\text{Tr}\sqrt{\sqrt{\rho_1}\rho_2\sqrt{\rho_1}} \right)^2
+        \end{gather*}
+
+        If we compute the fidelity for the first two states we obtain
+        \begin{gather*}
+          F(\rho^{(1)},\phi^+) = 0.881 \qquad   F(\rho^{(2)},\phi^-) = 0.872
+        \end{gather*}
+        While if we compute the fidelity for the third state as a function of the $p$ parameter we get a best result at
+        \begin{gather*}
+          p = 0.703 \qquad F(\rho^{(3)},\rho^{(3)}_{th}(p)) = 0.868
+        \end{gather*}
+
+        \begin{figure}[H]
+          \centering
+          \resizebox{0.5\textwidth}{!}{\import{img/}{decoherence_fidelity.pgf}}
+          \caption{Behavior of the fidelity for the third state varying the parameter $p$ in the theoretical form of the density matrix}
+          \label{fig:decoherence_fidelity}
+        \end{figure}
 
 
 
-
-
-
-
-
-
-
-
+  \section{Conclusion}
+    Via a relatively simple table top apparatus it has been possible to perform three key experiments for the 'Quantum World': the proof of concept of the Quantum Key Distribution, technology which now is starting to be used out of labs; the violation of the Bell inequalities which disproves the hidden variable theory, a 'classical' interpretation of the quantum theory. And finally the Quantum Tomography which allows to characterize the quantum state one is working with. The quite high fidelities computed with this last experiment show how good the experimental setup used is in creating the desired theoretical states.
 
 
 
