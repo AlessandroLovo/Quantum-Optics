@@ -25,12 +25,12 @@
     \ket{H} \xrightarrow[]{\text{crystal 1}} \ket{VV} \quad
     \ket{V} \xrightarrow[]{\text{crystal 2}} \ket{HH}
   \end{gather*}
-  Using the first half-wave plate the polarization of the beam is rotated to the diagonal state $\ket{D} = \frac{\ket{H} + \ket{V}}{\sqrt{2}}$, so when it impinges on the two crystals the exiting pair is in the entangled state $\ket{\phi^+} = \frac{\ket{HH} + \ket{VV}}{\sqrt{2}}$. However since the conversion is due to two type I crystals in order to not be able to distinguish which one did the conversion, two compensating crystals are introduced on the optical path. After some focusing the two beams hit the measuring device: a half-wave plate, a polarizing beam splitter (PBS) and a single photon detector (SPD).
+  Using the first half-wave plate the polarization of the beam is rotated to the diagonal state $\ket{D} = \frac{\ket{H} + \ket{V}}{\sqrt{2}}$, so when it impinges on the two crystals the exiting pair is in the entangled state $\ket{\phi^+} = \frac{\ket{HH} + \ket{VV}}{\sqrt{2}}$. However since the conversion is due to two type I crystals, in order to not be able to distinguish which one did the conversion, two compensating crystals are introduced on the optical path. After some focusing, the two beams hit the measuring device: a half-wave plate, a polarizing beam splitter (PBS) and a single photon detector (SPD).
   By tuning the angle $\alpha$ of the half-wave plate it is possible to measure any linear polarization $\ket{\theta} = \cos{\theta}\ket{H} + \sin{\theta}\ket{V}$ with the simple relation $\theta = 2\alpha$.
   The signals of the SPDs are sent to a time tagger in order to be able to do an a-posteriori coincidence analysis.
 
   \paragraph{Coincidence analysis}
-  The raw data of an acquisition consist of a list of timetags corresponding to the clicks of each of the two detectors expressed in timesteps of the time tagger $\tau = 80.955\si{.\pico\second}$. To extract the coincidences from it, first a histogram of the time differences between the two detectors is plotted and fitted with a gaussian with centroid $\mu$ and dispersion $\sigma$ (fig \ref{fig:hist}). At this point one can set a threshold $thr_{c} = 2\sigma$ for accepting coincidences, namely the number of coincidences $N$ is simply the number of points in the histogram for which $|\frac[f]{\Delta t}{\tau} - \mu| < thr_{c}$. To this value can be then assosciated a poissonian error $\sigma(N) = \sqrt{N}$.
+  The raw data of an acquisition consist of a list of timetags corresponding to the clicks of each of the two detectors expressed in timesteps ($\tau = 80.955\si{.\pico\second}$) of the time tagger. To extract the coincidences from it, first a histogram of the time differences between the two detectors is plotted and fitted with a gaussian with centroid $\mu$ and dispersion $\sigma$ (fig \ref{fig:hist}). At this point one can set a threshold $thr_{c} = 2\sigma$ for accepting coincidences, namely the number of coincidences $N$ is simply the number of points in the histogram for which $|\frac[f]{\Delta t}{\tau} - \mu| < thr_{c}$. To this value can be then assosciated a poissonian error $\sigma(N) = \sqrt{N}$.
 
   \begin{figure}[H]
     \centering
@@ -41,7 +41,7 @@
 
 
   \section{Entangled Quantum Key Distribution}
-    Following the protocol BBM92 Alice and Bob share a source of entangled photons (in our experiment Alice and Bob can be considered as the two measuring devices measuring the photon pairs) and will end up with a random secret shared key. The protocol can be summarized as follows:
+    Following the protocol BBM92 Alice and Bob share a source of entangled photons (in our experiment Alice and Bob can be considered as the two measuring devices measuring the photon pairs) and will end up with a \emph{random secret shared} key. The protocol can be summarized as follows:
     \begin{enumerate}
       \item \emph{Quantum Communication} For each photon they receive, Alice and Bob randomly and independently choose in which base to measure the polarization:
       \begin{gather*}
@@ -51,7 +51,7 @@
       \end{gather*}
       Since the state of the pair is $\ket{\phi^+} = \frac{\ket{HH} + \ket{VV}}{\sqrt{2}} = \frac{\ket{DD} + \ket{AA}}{\sqrt{2}}$ for each measurement they have a 50\% chance of obtaining either result: result that can be coded, for example, as 0 if it is first element of the base and 1 if it is the second.
       \item \emph{Sifting} After all the measurements they communicate via a classical channel the sequence of bases used for the measurement, restricting to the data in which they both measured in the same base. So on average the lenght of the key halves.
-      \item \emph{Parameter Estimation} Alice and Bob communicate to each other the results of the measurements of a portion (for example $r_s = 10\%$) of the sifted key to estimate the Quantum Bit Error Rate (QBER), namely the percentage of measurements in which they obtained a different result. The Qber can then be used to quantify the information that an eventual Evesdroppper has on the key.
+      \item \emph{Parameter Estimation} Alice and Bob communicate to each other the results of the measurements of a portion (for example $r_s = 10\%$) of the sifted key to estimate the Quantum Bit Error Rate (QBER), namely the percentage of measurements in which they obtained a different result. The QBER can then be used to quantify the information that an eventual Evesdroppper has on the key.
       \item \emph{Error Correction} Classical protocol at the end of which Alice and Bob have the same key, but the Evesdroppper has still information on it.
       \item \emph{Privacy Amplification} Other classical protocol that allows Alice and Bob to extract from their shared key a shorter one on which the Evesdroppper has no information at all. With this step the lenght of the key gets multiplied by the secret key rate
       \begin{equation*}
@@ -108,7 +108,7 @@
 
   \section{Bell test}
     With the same apparatus it is possible to perform a violation of the Bell inequalities thus proving experimentally that a hidden variable theory does not describe the physical world. To do so let us consider the two SPDs as two observers who are able to measure their photon in two bases.
-    For the first observer the base used is denoted with $x$ while the result of the measurement can be denoted with $a$ and assumes value 0 if the photon is projected onto the first element of the base and 1 otherwise. Analogously for the second observer the two variables are denoted with $y$ for the choice of the base and $b$ for the result of the measurement.
+    For the first observer the base used is denoted with $x$ while the result of the measurement can be denoted with $a$ and has value 0 if the photon is projected onto the first element of the base and 1 otherwise. Analogously for the second observer the two variables are denoted with $y$ for the choice of the base and $b$ for the result of the measurement.
 
     \begin{gather*}
       \mathcal{B}_1(x) =
@@ -175,7 +175,7 @@
     \begin{equation*}
       CHSH := \langle E_{00} \rangle + \langle E_{01} \rangle + \langle E_{10} \rangle - \langle E_{11} \rangle = 2.63 \pm 0.02
     \end{equation*}
-    that in a model with hidden variables is limited by $CHSH < 2$, while for quantum mechanics the condition is relaxed to $CHSH < 2\sqrt{2} \approx 2.83$. The result we found is around $36\sigma$ beyond the hidden variable limit and well within the quantum one, thus proving that the hidden variable theory is incompatible with experimental results.
+    that in a model with hidden variables is limited by the Bell inequality $CHSH < 2$, while for quantum mechanics the condition is relaxed to $CHSH < 2\sqrt{2} \approx 2.83$. The result we found is around $36\sigma$ beyond the hidden variable limit and well within the quantum one, thus proving that the hidden variable theory is incompatible with experimental results.
 
 
   \section{Quantum Tomography}
@@ -185,7 +185,7 @@
       \quad \ket{R}  = \frac{\ket{H} -i \ket{V}}{\sqrt{2}}, \quad \ket{L}  = \frac{\ket{H} +i \ket{V}}{\sqrt{2}}
     \end{gather*}
     where the last two states are the circularly polarized ones and are measured by inserting in the optical path of the photons a quarter-wave plate.
-    The measurements are performed on three different states and are reported in tab \ref{tab:tomo_coinc}.
+    The measurements are performed on three different prepared states and are reported in tab \ref{tab:tomo_coinc}.
 
     \begin{table}[H]
       \centering
@@ -219,12 +219,12 @@
     At this point there are two methods of performing the quantum tomography, both described in \cite{rif:tomo}.
 
     \subsection{Linear inversion}
-      The outcomes of the measurements $n_j$ are a linear function of the entries of the density matrix and thus this relations can be iverted obtaining
+      The outcomes of the measurements $n_j$ are a linear function of the entries of the density matrix $\hat{\rho}$ and thus this relations can be inverted obtaining
       \begin{gather*}
         \hat{\rho} = \frac{1}{N}\sum_{j = 1}^{16} n_j \hat{M}_j
         \qquad N = \sum_{j = 1}^4 n_j
       \end{gather*}
-      where the $4 \times 4$ matrices $\hat{M}_j$ are the ones in Appendix B of \cite{rif:tomo}. Actually there are some typos in the matrices $\hat{M}_2$ and $\hat{M}_{14}$. Here are their corrected versions:
+      where the $4 \times 4$ matrices $\hat{M}_j$ are the ones in Appendix B of \cite{rif:tomo}. Actually there are some typos in the matrices $\hat{M}_2$ and $\hat{M}_{14}$, here are their corrected versions:
       \begin{gather*}
         \hat{M}_2 = \frac{1}{2}
         \begin{pmatrix}
@@ -339,7 +339,7 @@
       \begin{equation*}
         \ket{\psi_5} = \ket{RH} = \frac{1}{\sqrt{2}} \left(1\cdot\ket{HH} + 0\cdot\ket{HV} -i\cdot\ket{VH} +0\cdot\ket{VV} \right)
       \end{equation*}
-      Maximizing $L^*$ is equivalent to the minimization of $L$ which is performed via the BFGS algorithm \cite{rif:bfgs}; but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
+      Maximizing $L^*$ is equivalent to the minimization of $L$ which is here performed via the BFGS algorithm \cite{rif:bfgs}; but to do so one needs a starting point in the 16-dimensional space of the parameters $t_i$. This starting point is computed inverting eq \ref{eq:T} and plugging for $\hat{\rho}_p$ the density matrix found with the linear inversion method. Since those density matrices weren't physical it is necessary to take the real part of the $t$ parameters obtained in this way (see \cite{rif:tomo} eq 4.6).
 
       Minimizing the likelihood, we obtain the following density matrices:
       \begin{gather*}
